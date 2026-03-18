@@ -28,7 +28,7 @@ importance of leveraging clinical data for overall system optimization.
 
 
 
-**CHAPTER ONE: DATABASE DESIGN AND NORMALIZATION**
+**DATABASE DESIGN AND NORMALIZATION**
 
 This project demonstrates a data warehouse management system to assist healthcare industry
 in its efficient decision making. The main objective is to organize data related to doctors,
@@ -143,7 +143,7 @@ appointment reason or status depend on the appointment id and not on the patient
 
 
 
-****CHAPTER TWO: SCHEMA IMPLEMENTATION USING MYSQL****
+****SCHEMA IMPLEMENTATION USING MYSQL****
 
 After completing the design, the next step is describing schema implementation. Basically, this
 schema is prepared in such a way that it ensures data integrity, consistency, security and also
@@ -208,7 +208,7 @@ allocation.
 has repeating values (ENUM), indexing reduces the time needed to locate the required
 rows
 
-**CHAPTER THREE: DATA IMPLEMENTATION AND VIEW CREATION**
+**DATA IMPLEMENTATION AND VIEW CREATION**
 
 In this task, realistic sample data is inserted into all the tables in the health management
 system. The goal is to demonstrate how a real hospital management system works with data
@@ -299,16 +299,236 @@ the same month.
 
 
 
+**ADVANCED SQL QUERIES**
+In this chapter, advanced SQL queries that demonstrates meaningful business questions in the
+healthcare industry. Each query addresses the use of advanced SQL features like joins,
+conditional logics, subqueries and other functions. Here, explanation of business insights and
+logic will be demonstrated of each procedure created and queries used in it.
+**1. Bills Generation:**
+
+<img width="626" height="319" alt="image" src="https://github.com/user-attachments/assets/b237656f-da9c-49f5-a62c-48b59a4db503" />
+The procedure is named as generate_bills. It takes three input parameters patient_id, room_id, inp_amount.
+What it does?
+
+•	Inserts new row into the bills table.
+
+•	Captures the patient, room, billing amount.
+
+•	Automatically sets the date of the bill to current date.
+
+•	Sets initial payment status as ‘Pending’.
+
+
+<img width="625" height="329" alt="image" src="https://github.com/user-attachments/assets/7b85ed13-0267-4d1c-b69c-188b7a018c41" />
+
+Business Insight:
+
+•	It automates the billing process. The hospital reception does not have to explicitly use insert queries. It can simply enter patient, room and amount details.
+
+•	It ensures consistency because every bill that is generated is in a standard format with a valid date and pending status.
+
+•	Also, it helps in improving operational efficiency by reducing human error in billing, speeding up the payment workflow and ensuring that bills are properly tracked in the system.
+
+•	From management’s point of view, it allows hospital to maintain up-to-date financial records which is important for annual audit, reporting and insurance claims.
+
+
+<img width="625" height="135" alt="image" src="https://github.com/user-attachments/assets/045c338f-26b9-4a92-b001-ec384124e4db" />
+
+Here, it is visible in the last entry.
+**2.	Patient Visits:**
+
+<img width="625" height="333" alt="image" src="https://github.com/user-attachments/assets/5f1fffd3-9a28-4d11-bbf5-ea0ece6cc1a9" />
+
+The procedure is named as get_appointments_by_patient. It takes one parameter inp_pat_id which is nothing but a unique id of the patient.
+What it does?
+
+•	Extract all the details of for the patient whose id is being entered in the input.
+
+•	Joins the appointment table with doctor’s table to process doctor’s name.
+
+•	The fields include appointment id, doctor name, appointment date, appointment status, reason for visit.
+
+•	Results are arranged in descending order by appointments because it helps in displaying the most recent appointments first.
+
+<img width="625" height="340" alt="image" src="https://github.com/user-attachments/assets/79686d52-3a62-4257-8cf8-7092cdc18ce3" />
+
+Business Insight:
+
+•	It gives a complete history of patient’s visits in the hospital.
+
+•	It is useful for doctors as they will can review patient’s previous visits before consultation and also tracks the progress of patient’s healthcare.
+
+•	It is also helpful for hospital reception staff to check upcoming or previous appointments.
+
+•	It also helps in effective hospital operations by reducing manual search via records, saving more time and prevent errors.
 
 
 
+Output
+
+<img width="626" height="78" alt="image" src="https://github.com/user-attachments/assets/cfeff5f6-7ae3-4d1e-8c81-4839724ed89f" />
+
+**3.	Busy Average Doctor:**
+
+<img width="625" height="321" alt="image" src="https://github.com/user-attachments/assets/acd2d460-79f2-4c95-9328-c464cd658f4a" />
 
 
+The name of the procedure is Get_Busy_Doctors_Avg. It does not have any input parameter.
+What it does?
+
+•	Joins doctor and appointment table to check how many appointments each doctor has handled.
+
+•	Group by doctor’s id or doctor’s name so that there is one record per doctor at least.
+
+•	In nested query, it calculated average number of appointments per doctor and the outer query uses this average in the having clause.
+
+•	Gives output of only those doctors whose appointment count is grater than average of appointments handled by doctor hospital wise.
+
+Business Insight:
+
+•	It helps in finding out doctors with high demand or doctors who are busy.
+
+•	It can also help in detecting doctors who have high workload and if the hospital requires more staffing.
+
+•	It is also helpful in monitoring performance of doctors as well.
+
+•	It can also be helpful in redistributing work which is assigned to doctors.
+
+Output:
+
+<img width="625" height="323" alt="image" src="https://github.com/user-attachments/assets/b96845ce-e74d-4271-a140-fbab7dd593d3" />
+
+**4.	Medicines Report:**
+<img width="624" height="327" alt="image" src="https://github.com/user-attachments/assets/96347614-524f-40d6-a290-b97c9b34ef09" />
+
+It is named as medication_stock_report. It has no parameters.
+What it does?
+
+•	It extracts medicine id, medicine name, dosage form and stock quantity from medication table.
+
+•	If stock quantity is equal to 0, it shows ‘Out of stock’, if stock quantity is less than 20 it shows ‘Low stock’. Else, it shows ‘In stock’.
+
+•	It is ordered by ascending order because it ensures the report that lists out of stock or low stock items at the top, so the medical department see the critical items at the top.
 
 
+Business Insights:
+
+•	It helps in quick identification of medicines which are out of stock or completely unavailable beneficial for inventory management and operations.
+
+•	It highlights stocks which are almost depleted which acts as an early warning to re-order before a stockout happens.
+
+•	Pharmacists can prioritize purchase orders and can ensure that most used drugs like insulin, pain relievers are never unavailable.
+
+•	By monitoring low-stock drugs, hospitals can ensure continuity of patient care.
+
+•	It is natural that medicine stock is a priority action for pharmacists and inventory management.
+
+Output:
+
+<img width="626" height="323" alt="image" src="https://github.com/user-attachments/assets/65606205-bbe9-4ed1-93ee-370c04b919e6" />
 
 
+**5.	Nurse Allocation:**
 
+<img width="624" height="324" alt="image" src="https://github.com/user-attachments/assets/bba6a184-3782-4134-bbef-cf5deef8867a" />
+
+It is named as nurse_allocation_department_basis.
+What it does?
+
+•	It generates nurse allocation report department wise.
+
+•	It starts with department table and uses left join nurse n on d.dep_id = n.dep_id. Basically, it includes all the departments even those where nurses are not assigned.
+
+•	It selects column department name, count for total number of nurses allocated in that department, also group concatenation is done to list down name of all the nurses for that department separated by commas.
+
+•	Then, it is grouped by department so it displays results per department.
+
+Business Insight:
+
+•	It helps us to see how many nurses are assigned to each department.
+
+•	It helps in identifying understaffed departments which is very crucial for patient care because every hospital has some standard ratio for nurse-patient.
+
+•	It is helpful in shift planning, scheduling and accountability.
+
+•	Also, it shows departments which does not have nurses which highlights staffing gaps in those departments that may need immediate HR or managerial actions.
+
+•	It is also helpful in preventing overstaffing in one department and understaffing in another.
+
+Output:
+
+<img width="625" height="323" alt="image" src="https://github.com/user-attachments/assets/2a6fa580-08da-4711-97b3-cbb0feba0728" />
+
+**6.	Cancel Appointment**
+
+<img width="625" height="343" alt="image" src="https://github.com/user-attachments/assets/9fb5dd8b-e522-45aa-9dce-8904ad80e503" />
+
+The procedure is named as Cancel_Appointment. It takes one input as a parameter which is appointment id.
+
+<img width="625" height="343" alt="image" src="https://github.com/user-attachments/assets/9aa9788f-9e99-4fce-a078-71b6a8955453" />
+
+What it does?
+
+•	First, an error handler is defined named as SqlException. If any sql error occurs during the transaction, the system will automatically roll back any partial changes that have happened.
+
+•	The errors include invalid id, foreign key constraints or table lock etc.
+
+•	It returns a message ‘Error: Appointment cancellation failed’ rather than corrupting the data.
+
+•	Then, it begins transaction. Whatever is inside the transaction block, it treats it as one unit. If it is completed – Commit, if it fails -Rollback.
+
+•	Coming to the main logic of this procedure, it updates the status of appointments as ‘Cancelled’ for the input appointment id. This ensures that the appointment is no longer active or scheduled.
+
+•	After that it commits the transaction and returns a message ‘Appointment cancelled successfully’.
+
+Business Insights:
+
+•	It helps in keeping the appointment records consistent as once the appointment is cancelled, it is marked clearly in the system.
+
+•	It helps in preventing overbooking as doctor’s schedule will automatically free up time slots for other patients.
+
+•	Reception staff can easily manage cancellation of appointments without bothering about data corruption.
+
+•	It automates operations which include updating billings, notifying doctors or allocations of rooms which are free.
+
+Output:
+
+<img width="624" height="314" alt="image" src="https://github.com/user-attachments/assets/b6954031-b8b2-4df8-b6e4-048b6d9bb223" />
+
+This figure shows the message – Appointment cancelled successfully.
+
+<img width="625" height="144" alt="image" src="https://github.com/user-attachments/assets/72b70462-91fd-43b8-9bc0-48c696bff276" />
+
+Also, we can check here the status of Appointment id = 15, it is displaying ‘Cancelled’.
+
+
+**APPLICATION OF CAP THEOREM**
+
+The CAP theorem states that in any distributed database management system it is not possible to simultaneously guarantee all three of the following properties:
+**Consistency:**
+In layman terms, every read receives the most recent write or an error. In simple words, all the nodes in the system reflect the same data at any given time. For example, if a doctor updates a patient record on one server, all other servers immediately show the updated data when anyone queries it.
+In healthcare, Consistency of data is very important when dealing with patient records because inaccurate or outdated data can be dangerous for the operational aspects of the system.
+Note: To maintain consistency, the system may delay responses or reject requests until and unless all the nodes are synchronized.
+**Availability:**
+In availability, every request receives a response even if it is not the latest or current data. The system remains operative and responsive and it does not crash/hang. For example, if one of the servers of hospital database goes down other servers can still handle patient queries and appointment bookings without interruption.
+In healthcare, Availability plays a very crucial role in emergency systems (eg. Ambulance data). The system should stay accessible even if multiple servers fail.
+Availability may lead serving slightly less useful data if synchronization with other nodes is delayed.
+**Partition Tolerance:**
+In partition, the system continues to function correctly even if there are communication failures or network partition between distributed nodes. For example, if a network link between Hospital X and Hospital Y goes down, both can still function independently without having any access to each other’s data.
+In healthcare, partition tolerance plays a very big role in geographically distributed systems where hospitals are connected via unstable networks.
+In order to maintain partition tolerance, consistency and availability has to be sacrificed temporarily until the network recovers.
+
+**Why a distributed system cannot guarantee Consistency, Partition & Availability at the same time?**
+In a distributed system, data is stored across multiple nodes. If anything is working perfectly, it might appear that all the three properties are working together. But when a partition happens and some nodes cannot communicate with each other properly, the system is bound to make a choice:
+
+•	In case it prioritizes consistency, it must block requests/returns errors until the data between the nodes is synchronized. It basically means that at this point Availability is lost i.e. the system becomes temporarily unavailable or might get slower.
+
+•	In case it prioritizes Availability, it continues serving requests using the data that is already available in each node. It means consistency is lost at this point because different nodes may have different aspects of data.
+
+Therefore, a distributed system cannot guarantee all the properties at a same time because they are always at a conflict with one another.
+1.	CA (Consistency + Availability) – It works efficient when network is reliable.
+2.	CP (Consistency + Partition Tolerance) – It prioritize actual data even though some requests fail.
+3.	AP (Availability + Partition Tolerance) – It prioritizes uptime even the data is not reliant.
 
 
 
