@@ -143,6 +143,58 @@ appointment reason or status depend on the appointment id and not on the patient
 
 
 
+****CHAPTER TWO: SCHEMA IMPLEMENTATION USING MYSQL****
+
+After completing the design, the next step is describing schema implementation. Basically, this
+schema is prepared in such a way that it ensures data integrity, consistency, security and also
+follows the principles of relational database management systems (RDBMS). The structure is in
+a manner that it supports implementation of complex queries.
+**Building/Creating schema:**
+The schema building is initialized with CREATE query in MYSQL. The tables were implemented
+using the following:
+
+• Primary keys – for unique identification.
+
+• Foreign keys – to establish relationships among tables.
+
+• Constraints like NOT NULL, UNIQUE and DEFAULT for data reliability.
+
+• Data types such as INT, DECIMAL, VARCHAR, DATE to align with database.
+
+• Other datatypes like ENUM, ON DELETE CASCADE, etc.
+
+The main entities include: Doctors, Patients, Departments, Nurses, Medications, Pharmacies,
+Insurance, Rooms, Appointments, Bills.
+The Junction tables are also created to solve the problem of relationships:
+
+• Doctor_departments
+
+• Patient_Insurance
+
+• Appointments
+
+• Bills
+
+ Visual representation of table creation queries that were implemented:
+
+ <img width="624" height="276" alt="image" src="https://github.com/user-attachments/assets/46542b2b-0eac-4e8c-80cf-773d2d89ce3b" />
+ <img width="625" height="284" alt="image" src="https://github.com/user-attachments/assets/f5d1bee0-4b0e-4966-af9b-87da5e8ad504" />
+
+
+** Indexing**
+Indexing in MySQL is a database structure (tree or hash-based structure) that improves the
+speed of retrieving data records on a table. Think of it like the index in the back of a book.
+Without it, to find something you might have to read every page. With it, you can jump right to
+the section where the information is.
+Purpose: It speeds up queries that involve operations like SELECT, WHERE, JOIN, ORDER BY
+which allows the database engine to avoid scanning every row.
+
+
+
+
+
+
+
 
 
 
