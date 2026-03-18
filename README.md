@@ -182,21 +182,118 @@ The Junction tables are also created to solve the problem of relationships:
 
 
 ** Indexing**
+
 Indexing in MySQL is a database structure (tree or hash-based structure) that improves the
 speed of retrieving data records on a table. Think of it like the index in the back of a book.
 Without it, to find something you might have to read every page. With it, you can jump right to
 the section where the information is.
-Purpose: It speeds up queries that involve operations like SELECT, WHERE, JOIN, ORDER BY
+
+**Purpose**: It speeds up queries that involve operations like SELECT, WHERE, JOIN, ORDER BY
 which allows the database engine to avoid scanning every row.
 
 
+<img width="624" height="310" alt="image" src="https://github.com/user-attachments/assets/a516f492-51b6-4242-9a8b-8d7851a38102" />
+
+
+• The index (idx_dep_name) allows faster lookup of doctors with the help of department
+name.
+
+• The index (idx_room_status) helps is better retrieving of patient rooms for better
+allocation.
+
+• Departments are often searched by their names (e.g. Cardiology, Neurology). This index
+(idx_dep_name) here speeds up the queries when filtering or joining by department.
+
+• In a hospital, staff frequently check which rooms are Available or Occupied. Since status
+has repeating values (ENUM), indexing reduces the time needed to locate the required
+rows
+
+**CHAPTER THREE: DATA IMPLEMENTATION AND VIEW CREATION**
+
+In this task, realistic sample data is inserted into all the tables in the health management
+system. The goal is to demonstrate how a real hospital management system works with data
+such as patient records, appointments, billings, etc.
+
+<img width="626" height="319" alt="image" src="https://github.com/user-attachments/assets/b4a55e58-494a-4c81-8469-acd2c2fa3ff1" />
+
+<img width="625" height="324" alt="image" src="https://github.com/user-attachments/assets/0b00b89c-639a-496b-a216-7d4992304054" />
+
+•	Each table contains 5 – 10 rows to ensure sufficient data diversity.
+
+•	This data not only populates the table but also makes it possible to test relationships between the tables (many-to-many, one-to-many) and efficiency of queries using indexing.
+
+**View**
+A view in SQL is like a virtual table that is based in the result of Sql query. It does not have any
+storage or stores data itself but presents data from one or more tables in a particular format. It
+does not store data physically but only displays the output from underlying tables
+
+**View 1:** Total bills per patient
+This view displays a financial summary for each patient including the number of bills, total
+charges, how much amount has been already paid, how much amount is pending.
+It is helpful for:
+
+• Accounting staff to manage billing records.
+
+• Helps in making a decision for follow-ups and reminders about payments by patients.
+
+<img width="625" height="323" alt="image" src="https://github.com/user-attachments/assets/ac9924d6-ac8e-4ccb-af28-7ec5b120fc8e" />
+
+Here we have created a view named as **Patient_Billing_Summary**:
+
+• First it selects patient_id
+
+• Then it creates a patient name column by concatenating first and last name using
+CONCAT.
+
+• After that, it counts how many bills each patient has using COUNT. If no bill exists for the
+patient, the output will be 0.
+
+• SUM query – adds up all bill amount for each patient. Also referred as Total Bill.
+
+• We have used CASE to distinguish the total paid vs pending amounts. If bill status is
+‘Paid’ then add the amount else add zero.
+
+• Similarly same thing is done for ‘Pending’
+
+• JOINS the patient table with bills table on patient id.
+
+• LEFT JOIN makes sure that all the patients are included even those with no bills.
+
+• GROUP BY patient id and patient name
 
 
 
+**View Two:** Monthly appointments trend
+This view shows the trend of appointments per month, alongwith breaking of complete and
+cancelled appointments.
+It is helpful for:
 
+• Useful for hospital administrators to keep a check on patient engagement and also gives
+insight on doctor workload.
 
+• Identification of season patterns (example cold-fever in winters).
 
+• Assist in human resource allocation and planning.
 
+<img width="625" height="304" alt="image" src="https://github.com/user-attachments/assets/53ab5610-9900-49fa-bced-0b9bfc4f1922" />
+
+Here we have created a view as Monthly_Appointment_Trend:
+
+• DATE_FORMAT - takes the appointment date field in year-month format.
+
+• After that it counts the number of appointments using appointment id using the COUNT
+query. It gives total appointments scheduled in a month.
+
+• SUM – for each row if the status is ‘Completed’, add 1 otherwise add 0. It gives total
+completed appointments in a month.
+
+• In the same way another SUM is used which check the status of appointments as
+‘Cancelled’. It gives total cancelled appointments for each month.
+
+• GROUP BY – groups the results by month. It groups all the appointments happened in
+the same month.
+
+• ORDER BY – it sorts the output of appointments monthly in ascending order.
 
 
 
